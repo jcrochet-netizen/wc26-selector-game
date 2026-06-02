@@ -165,7 +165,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   <!-- ═══ RIGHT: Live pitch + Share ═══ -->
   <div class="pitch-panel">
     <div class="pitch-container" id="pitchContainer">
-      <div class="pitch-title">Mon XI pour le Maroc<strong id="pitchFormationLabel">4-3-3</strong></div>
+      <div class="pitch-title"><span id="pitchTitleText">Mon XI pour le Maroc</span><strong id="pitchFormationLabel">4-3-3</strong></div>
       <div class="pitch" id="pitch">
         <div class="pitch-lines">
           <div class="halfway"></div>
@@ -194,7 +194,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 /* ═══════════════════════════════════════════════════════════════════
-   ⚙️  CONFIG — Modifie uniquement cette section pour personnaliser
+   ⚙️  CONFIG — Tout ce qui est propre à une équipe est ici.
+   Pour créer une nouvelle sélection : dupliquer ce fichier en <pays>.html
+   puis ne modifier QUE ce bloc (COUNTRY, I18N, PITCH_DOT_COLOR, PLAYERS).
    ═══════════════════════════════════════════════════════════════════ */
 
 const COUNTRY = {
@@ -204,6 +206,7 @@ const COUNTRY = {
 
 const I18N = {
   pageTitle: "Compose ton XI de départ du Maroc pour la Coupe du Monde 2026 | Afrik-Foot",
+  pitchTitle: "Mon XI pour le Maroc",          // titre affiché au-dessus du terrain (modal)
   posGkFull: "Gardiens",
   posDefFull: "Défenseurs",
   posMidFull: "Milieux",
@@ -217,7 +220,7 @@ const I18N = {
 };
 
 /* Couleur des pastilles sur le terrain (modal) — identique pour tous les joueurs.
-   Pour le Maroc : rouge. */
+   En général la couleur du maillot/drapeau. Maroc : rouge. */
 const PITCH_DOT_COLOR = "#c1272d";
 
 /* Schémas tactiques disponibles.
@@ -381,6 +384,7 @@ function getFirstName(name) {
 function init() {
   document.documentElement.lang = COUNTRY.htmlLang;
   document.title = I18N.pageTitle;
+  document.getElementById("pitchTitleText").textContent = I18N.pitchTitle;
   rebuildSlots();
   renderFormationOptions();
   renderPlayers();
