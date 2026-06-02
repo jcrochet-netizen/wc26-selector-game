@@ -219,10 +219,11 @@ const I18N = {
   downloadFilename: "ma-compo-algerie-cdm2026.png"
 };
 
-/* Couleur des pastilles sur le terrain (modal) — identique pour tous les joueurs.
-   En général la couleur du maillot/drapeau. Algérie : rouge (le vert des « Verts »
-   se confondrait avec la pelouse — changer ici si tu préfères le vert). */
-const PITCH_DOT_COLOR = "#d21034";
+/* Style des pastilles sur le terrain (modal) — identique pour tous les joueurs.
+   Algérie : pastille blanche, bord et initiales en rouge. */
+const PITCH_DOT_COLOR  = "#ffffff";   // fond de la pastille
+const PITCH_DOT_BORDER = "#d21034";   // couleur du bord
+const PITCH_DOT_TEXT   = "#d21034";   // couleur des initiales
 
 /* Schémas tactiques disponibles.
    - "lines" : rangées du HAUT (attaque) vers le BAS (gardien).
@@ -509,7 +510,7 @@ function filledDot(player, pos, slotIndex) {
   const lastName = getLastName(player.name);
   const initials = getInitials(player.name);
   return `<div class="pitch-dot" data-pos="${pos}" onclick="clickSlot(${slotIndex})" title="Retirer ${player.name}">
-    <div class="dot-circle" style="background:${PITCH_DOT_COLOR}">${initials}</div>
+    <div class="dot-circle" style="background:${PITCH_DOT_COLOR};border-color:${PITCH_DOT_BORDER};color:${PITCH_DOT_TEXT}">${initials}</div>
     <div class="dot-name">${lastName}</div>
   </div>`;
 }
