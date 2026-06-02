@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Compose ton XI de départ du Maroc pour la Coupe du Monde 2026 | Afrik-Foot</title>
+<meta name="description" content="Choisis ton schéma tactique et compose tes 11 titulaires du Maroc pour la Coupe du Monde 2026. Aperçu en direct sur le terrain. Partage ta compo !">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+/* ── Reset & Variables ──────────────────────────────────────────── */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#1a1a1a;--card:#2a2a2a;--card-hover:#353535;--card-selected:#2a361a;
+  --accent:#6d8d3f;--accent-dark:#5a7333;--text:#f5f5f5;--text-muted:#a8a8a8;
+  --pitch-green:#2d6a30;--pitch-dark:#1e5420;--pitch-line:rgba(255,255,255,.35);
+  --pos-gk:#1e88e5;--pos-def:#2e7d32;--pos-mid:#f9a825;--pos-att:#c62828;
+  --done-bg:#1e3a23;--done-text:#5ec46f;--accent-light:#94b855;
+  --radius:10px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.4}
+
+/* ── Widget Container (2 columns: selection | live pitch) ───────── */
+#squad-widget{display:flex;gap:24px;width:100%;max-width:800px;margin:0 auto;padding:20px;align-items:flex-start}
+.selector-panel{flex:1;min-width:0}
+.pitch-panel{width:340px;flex-shrink:0;position:sticky;top:20px}
+
+/* ── Formation selector ─────────────────────────────────────────── */
+.formation-bar{margin-bottom:16px}
+.formation-label{font-size:.78rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.formation-options{display:flex;gap:8px;flex-wrap:wrap}
+.formation-btn{flex:1;min-width:56px;padding:7px 6px;background:var(--card);border:2px solid transparent;border-radius:var(--radius);cursor:pointer;transition:all .2s;font-family:inherit;font-size:.8rem;font-weight:700;color:var(--text);letter-spacing:.3px}
+.formation-btn:hover:not(.active){background:var(--card-hover)}
+.formation-btn.active{background:var(--card-selected);border-color:var(--accent);color:var(--accent-light)}
+.place-hint{font-size:.72rem;color:var(--text-muted);font-style:italic;margin-bottom:14px;line-height:1.4}
+
+/* ── Progress ───────────────────────────────────────────────────── */
+.progress{display:flex;align-items:center;gap:14px;margin-bottom:18px;font-size:1.05rem;color:var(--text-muted)}
+.progress-bar{flex:1;height:14px;background:var(--card);border-radius:7px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-dark));transition:width .3s}
+.progress-text{font-weight:700;color:var(--text);white-space:nowrap;font-size:1.05rem}
+.progress-text .done{color:var(--accent-light)}
+
+/* ── Player Cards Grid (single pool, grouped by position) ───────── */
+.pos-group{margin-bottom:16px}
+.pos-group:last-child{margin-bottom:0}
+.pos-group-label{font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.pos-group-label::before{content:"";width:16px;height:4px;border-radius:2px;background:var(--lbl)}
+.pos-group-count{margin-left:auto;font-weight:700;color:var(--text-muted)}
+.pos-group-count.done{color:var(--done-text)}
+.player-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.player-card{display:flex;align-items:center;gap:6px;background:var(--card);border:2px solid transparent;border-radius:var(--radius);padding:6px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;min-width:0}
+.player-card:hover:not(.disabled){border-color:var(--accent);background:var(--card-hover)}
+.player-card.selected{border-color:var(--accent);background:var(--card-selected)}
+.player-card.disabled{opacity:.35;pointer-events:none}
+.player-card .initials{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.2px}
+.player-card .info{flex:1;min-width:0;overflow:hidden}
+.player-card .name{font-size:.72rem;font-weight:600;line-height:1.25}
+.player-card .name span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.player-card .name .first{font-weight:400;color:var(--text-muted);font-size:.7rem}
+.player-card .check{position:absolute;top:5px;right:5px;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#fff;display:none;align-items:center;justify-content:center;font-size:.65rem;font-weight:700}
+.player-card.selected .check{display:flex}
+
+/* ── Pitch ──────────────────────────────────────────────────────── */
+.pitch-container{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 4px 20px rgba(0,0,0,.12)}
+.pitch-title{text-align:center;font-size:.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;line-height:1.4}
+.pitch-title strong{display:block;color:var(--accent-light);font-size:1rem;letter-spacing:2px;margin-top:2px}
+.pitch{position:relative;width:100%;padding-bottom:150%;background:linear-gradient(180deg,var(--pitch-dark) 0%,var(--pitch-green) 22%,var(--pitch-green) 78%,var(--pitch-dark) 100%);border-radius:8px;overflow:hidden;border:2px solid var(--pitch-line)}
+
+/* Pitch lines */
+.pitch-lines{position:absolute;inset:0}
+.pitch-lines .halfway{position:absolute;top:50%;left:5%;right:5%;height:0;border-top:2px solid var(--pitch-line)}
+.pitch-lines .center-circle{position:absolute;top:50%;left:50%;width:22%;padding-bottom:22%;border-radius:50%;border:2px solid var(--pitch-line);transform:translate(-50%,-50%)}
+.pitch-lines .center-dot{position:absolute;top:50%;left:50%;width:5px;height:5px;border-radius:50%;background:var(--pitch-line);transform:translate(-50%,-50%)}
+.pitch-lines .box-top{position:absolute;top:0;left:22%;right:22%;height:14%;border:2px solid var(--pitch-line);border-top:none}
+.pitch-lines .box-bottom{position:absolute;bottom:0;left:22%;right:22%;height:14%;border:2px solid var(--pitch-line);border-bottom:none}
+
+/* Pitch position lines (rows of dots) */
+.pitch-zones{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:4% 4%}
+.pitch-zone{display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:20px;min-height:0;flex:1}
+.pitch-zone.gk{flex:0 0 auto}
+.pitch-zone.spread{justify-content:space-between;padding:0 5%}
+
+/* Pitch dots (small badges with position letter) */
+.pitch-dot{display:flex;flex-direction:column;align-items:center;width:52px;transition:transform .2s}
+.pitch-dot .dot-circle{width:42px;height:42px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:#fff;letter-spacing:.5px;box-shadow:0 2px 6px rgba(0,0,0,.45)}
+.pitch-dot .dot-name{font-size:.7rem;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9);margin-top:3px;white-space:nowrap;max-width:64px;overflow:hidden;text-overflow:ellipsis}
+.pitch-dot{cursor:pointer}
+.pitch-dot.empty .dot-circle{border:2px dashed rgba(255,255,255,.45);background:rgba(255,255,255,.08)!important;color:rgba(255,255,255,.45)}
+.pitch-dot.empty .dot-name{color:rgba(255,255,255,.4)}
+.pitch-dot.empty.active .dot-circle{border:2px solid var(--accent-light);background:rgba(148,184,85,.25)!important;color:#fff;box-shadow:0 0 0 3px rgba(148,184,85,.5)}
+.pitch-dot.empty.active .dot-name{color:var(--accent-light)}
+
+/* ── Share Section ──────────────────────────────────────────────── */
+.share-section{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.share-section.locked{opacity:.5;pointer-events:none}
+.share-hint{text-align:center;font-size:.72rem;color:var(--text-muted);font-style:italic}
+.share-hint.hidden{display:none}
+.share-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.share-btn{display:flex;align-items:center;justify-content:center;gap:5px;padding:11px 6px;border:none;border-radius:var(--radius);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;color:#fff;font-family:inherit}
+.share-btn:hover{opacity:.9;transform:translateY(-1px)}
+.share-btn.x{background:#000}
+.share-btn.fb{background:#1877f2}
+.share-btn.wa{background:#25d366}
+.share-btn.ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.share-btn.dl{background:var(--accent);grid-column:1 / -1;padding:13px;font-size:.9rem}
+
+/* ── Reset Button ───────────────────────────────────────────────── */
+.reset-btn{display:block;width:100%;margin-top:14px;padding:9px;background:transparent;color:var(--text-muted);border:1px solid #555;border-radius:var(--radius);font-size:.78rem;cursor:pointer;transition:all .2s;font-family:inherit}
+.reset-btn:hover{border-color:var(--accent-light);color:var(--accent-light)}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media(max-width:800px){
+  #squad-widget{flex-direction:column;padding:12px;gap:16px}
+  .pitch-panel{width:100%;position:static}
+  .pitch-panel .pitch-container{max-width:400px;margin:0 auto}
+  .pitch{padding-bottom:120%}
+  .player-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:600px){
+  .player-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .player-card{padding:7px;gap:7px}
+  .player-card .initials{width:36px;height:36px;font-size:.74rem}
+  .player-card .name{font-size:.72rem}
+  .pitch-dot{width:46px}
+  .pitch-dot .dot-circle{width:38px;height:38px;font-size:.78rem}
+  .pitch-dot .dot-name{font-size:.65rem}
+}
+@media(max-width:400px){
+  #squad-widget{padding:8px}
+  .player-card{padding:6px;gap:6px}
+  .player-card .initials{width:32px;height:32px;font-size:.7rem}
+  .player-card .name{font-size:.68rem}
+  .player-card .name .first{font-size:.62rem}
+}
+</style>
+</head>
+<body>
+
+<div id="squad-widget">
+
+  <!-- ═══ LEFT: Selection ═══ -->
+  <div class="selector-panel">
+
+    <!-- Formation selector -->
+    <div class="formation-bar">
+      <div class="formation-label">Schéma tactique</div>
+      <div class="formation-options" id="formationOptions"></div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress">
+      <div class="progress-text"><span class="done" id="totalSelected">0</span> / <span id="totalRequired">11</span> titulaires</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="place-hint">Astuce : clique un emplacement sur le terrain, puis un joueur, pour le positionner exactement où tu veux (même hors de son poste).</div>
+
+    <!-- Single pool, grouped by position (non-clickable labels) -->
+    <div class="players-col" id="playersCol"></div>
+
+    <button class="reset-btn" onclick="resetAll()">↺ Réinitialiser</button>
+  </div>
+
+  <!-- ═══ RIGHT: Live pitch + Share ═══ -->
+  <div class="pitch-panel">
+    <div class="pitch-container" id="pitchContainer">
+      <div class="pitch-title">Mon XI pour le Maroc<strong id="pitchFormationLabel">4-3-3</strong></div>
+      <div class="pitch" id="pitch">
+        <div class="pitch-lines">
+          <div class="halfway"></div>
+          <div class="center-circle"></div>
+          <div class="center-dot"></div>
+          <div class="box-top"></div>
+          <div class="box-bottom"></div>
+        </div>
+        <div class="pitch-zones" id="pitchZones"></div>
+      </div>
+    </div>
+
+    <div class="share-section locked" id="shareSection">
+      <div class="share-hint" id="shareHint">Complète ton XI pour partager</div>
+      <button class="share-btn dl" onclick="downloadImage()">📥 Télécharger l'image</button>
+      <div class="share-buttons">
+        <button class="share-btn x"  onclick="shareOn('x')">𝕏 Partager</button>
+        <button class="share-btn fb" onclick="shareOn('facebook')">Facebook</button>
+        <button class="share-btn wa" onclick="shareOn('whatsapp')">WhatsApp</button>
+        <button class="share-btn ig" onclick="shareOn('instagram')">Instagram</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   ⚙️  CONFIG — Modifie uniquement cette section pour personnaliser
+   ═══════════════════════════════════════════════════════════════════ */
+
+const COUNTRY = {
+  name: "Maroc",
+  htmlLang: "fr"
+};
+
+const I18N = {
+  pageTitle: "Compose ton XI de départ du Maroc pour la Coupe du Monde 2026 | Afrik-Foot",
+  posGkFull: "Gardiens",
+  posDefFull: "Défenseurs",
+  posMidFull: "Milieux",
+  posAttFull: "Attaquants",
+  shareHintIncomplete: "Complète ton XI pour partager",
+  shareText: "Voici mon XI de départ du Maroc pour la Coupe du Monde 2026 ! Et toi, quelle est ta compo ? Compose la tienne ici :",
+  instagramAlert: "Image téléchargée ! Partage-la directement sur Instagram.",
+  errorFileProto: "La capture locale est bloquée en ouverture directe (file://). Lance un serveur local (ex : python3 -m http.server) ou teste sur WordPress.",
+  errorPrefix: "Erreur : ",
+  downloadFilename: "ma-compo-maroc-cdm2026.png"
+};
+
+/* Couleur des pastilles sur le terrain (modal) — identique pour tous les joueurs.
+   Pour le Maroc : rouge. */
+const PITCH_DOT_COLOR = "#c1272d";
+
+/* Schémas tactiques disponibles.
+   - "lines" : rangées du HAUT (attaque) vers le BAS (gardien).
+     Chaque rangée a une position (gk/def/mid/att) et un nombre de joueurs.
+   - Le total par poste est calculé automatiquement à partir des rangées.
+   - Le premier schéma de la liste est sélectionné par défaut. */
+const FORMATIONS = {
+  "4-3-3":   { label: "4-3-3",   lines: [ {pos:"att",count:3}, {pos:"mid",count:3}, {pos:"def",count:4}, {pos:"gk",count:1} ] },
+  "4-4-2":   { label: "4-4-2",   lines: [ {pos:"att",count:2}, {pos:"mid",count:4}, {pos:"def",count:4}, {pos:"gk",count:1} ] },
+  "4-2-3-1": { label: "4-2-3-1", lines: [ {pos:"att",count:1}, {pos:"mid",count:3}, {pos:"mid",count:2}, {pos:"def",count:4}, {pos:"gk",count:1} ] },
+  "3-5-2":   { label: "3-5-2",   lines: [ {pos:"att",count:2}, {pos:"mid",count:2}, {pos:"mid",count:3,spread:true}, {pos:"def",count:3}, {pos:"gk",count:1} ] },
+  "3-4-3":   { label: "3-4-3",   lines: [ {pos:"att",count:3}, {pos:"mid",count:4}, {pos:"def",count:3}, {pos:"gk",count:1} ] }
+};
+
+const SQUAD_TOTAL = 11;
+
+/* Effectif marocain (source : liste fournie). */
+const PLAYERS = {
+  gk: [
+    { id: 1, name: "Yassine Bounou" },
+    { id: 2, name: "Munir Mohamedi" },
+    { id: 3, name: "Ahmed Reda Tagnaouti" }
+  ],
+  def: [
+    { id: 20, name: "Achraf Hakimi" },
+    { id: 21, name: "Nayef Aguerd" },
+    { id: 22, name: "Noussair Mazraoui" },
+    { id: 23, name: "Youssef Belammari" },
+    { id: 24, name: "Anass Salah-Eddine" },
+    { id: 25, name: "Chadi Riad" },
+    { id: 26, name: "Issa Diop" },
+    { id: 27, name: "Zakaria El Ouahdi" },
+    { id: 28, name: "Redouane Halhal" }
+  ],
+  mid: [
+    { id: 50, name: "Sofyan Amrabat" },
+    { id: 51, name: "Azzedine Ounahi" },
+    { id: 52, name: "Bilal El Khannouss" },
+    { id: 53, name: "Ismael Saibari" },
+    { id: 54, name: "Neil El Aynaoui" },
+    { id: 55, name: "Samir El Mourabet" },
+    { id: 56, name: "Ayyoub Bouaddi" }
+  ],
+  att: [
+    { id: 80, name: "Ayoub El Kaabi" },
+    { id: 81, name: "Abde Ezzalzouli" },
+    { id: 82, name: "Soufiane Rahimi" },
+    { id: 83, name: "Brahim Díaz" },
+    { id: 84, name: "Chemsdine Talbi" },
+    { id: 85, name: "Gessime Yassine" },
+    { id: 86, name: "Ayoube Amaimouni" }
+  ]
+};
+
+/* ═══════════════════════════════════════════════════════════════════
+   🚫 FIN DU CONFIG — Code partagé ci-dessous
+   ═══════════════════════════════════════════════════════════════════ */
+
+const POSITIONS = ["gk","def","mid","att"];
+const POS_COLOR = { gk:"var(--pos-gk)", def:"var(--pos-def)", mid:"var(--pos-mid)", att:"var(--pos-att)" };
+const POS_LABEL_FULL = { gk:I18N.posGkFull, def:I18N.posDefFull, mid:I18N.posMidFull, att:I18N.posAttFull };
+const FORMATION_KEYS = Object.keys(FORMATIONS);
+
+const state = {
+  formation: FORMATION_KEYS[0],
+  slots: [],     // un emplacement du terrain par index : objet {player,pos} ou null
+  active: null   // index de l'emplacement ciblé pour le prochain placement
+};
+
+/* Liste ordonnée des emplacements du schéma courant (haut → bas, gauche → droite). */
+function formationSlots() {
+  const slots = [];
+  FORMATIONS[state.formation].lines.forEach(line => {
+    for (let i = 0; i < line.count; i++) slots.push({ pos: line.pos, spread: !!line.spread });
+  });
+  return slots;
+}
+
+/* (Re)construit le tableau des emplacements en conservant les joueurs déjà placés. */
+function rebuildSlots() {
+  const placed = (state.slots || []).filter(Boolean); // joueurs déjà placés, dans l'ordre
+  state.slots = formationSlots().map(() => null);
+  const order = fillOrder();
+  placed.forEach((item, i) => { if (i < order.length) state.slots[order[i]] = item; });
+  state.active = firstEmptySlot(); // on cible d'emblée le 1er emplacement libre (le gardien)
+}
+
+function totalSelected() {
+  return state.slots.filter(Boolean).length;
+}
+
+function placedGk() {
+  return state.slots.some(s => s && s.pos === "gk");
+}
+
+function isPlaced(id) {
+  return state.slots.some(s => s && s.player.id === id);
+}
+
+/* Ordre de remplissage automatique : on commence par le gardien (ligne du bas),
+   puis on remonte ligne par ligne, chaque ligne de DROITE à GAUCHE.
+   Renvoie la liste des index d'emplacements dans cet ordre. */
+function fillOrder() {
+  const lines = FORMATIONS[state.formation].lines;
+  const perLine = [];
+  let idx = 0;
+  lines.forEach(line => {
+    const arr = [];
+    for (let i = 0; i < line.count; i++) arr.push(idx++);
+    perLine.push(arr);
+  });
+  const order = [];
+  for (let li = perLine.length - 1; li >= 0; li--) {  // bas (gardien) → haut (attaque)
+    order.push(...perLine[li].slice().reverse());     // droite → gauche
+  }
+  return order;
+}
+
+function firstEmptySlot() {
+  const order = fillOrder();
+  for (const i of order) if (state.slots[i] === null) return i;
+  return -1;
+}
+
+/* Emplacement cible : celui choisi sur le terrain s'il est libre, sinon le prochain
+   de l'ordre de remplissage (gardien d'abord, puis chaque ligne de droite à gauche). */
+function targetSlotFor() {
+  if (state.active != null && state.active >= 0 && state.slots[state.active] === null) {
+    return state.active;
+  }
+  return firstEmptySlot();
+}
+
+/* La seule règle : 11 titulaires placés (et un seul gardien, géré à la sélection). */
+function isSquadValid() {
+  return totalSelected() === SQUAD_TOTAL;
+}
+
+/* ── Name helpers ────────────────────────────────────────────────── */
+function getInitials(name) {
+  const parts = name.replace(/[-']/g, " ").trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function getLastName(name) {
+  const parts = name.trim().split(/\s+/);
+  return parts[parts.length - 1];
+}
+
+function getFirstName(name) {
+  const parts = name.trim().split(/\s+/);
+  parts.pop();
+  return parts.join(" ");
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════════════ */
+function init() {
+  document.documentElement.lang = COUNTRY.htmlLang;
+  document.title = I18N.pageTitle;
+  rebuildSlots();
+  renderFormationOptions();
+  renderPlayers();
+  renderPitch();
+  updateProgress();
+  updateShareState();
+}
+
+/* ── Formation selector ──────────────────────────────────────────── */
+function renderFormationOptions() {
+  const el = document.getElementById("formationOptions");
+  el.innerHTML = FORMATION_KEYS.map(key => {
+    const cls = key === state.formation ? "active" : "";
+    return `<button class="formation-btn ${cls}" onclick="changeFormation('${key}')">${FORMATIONS[key].label}</button>`;
+  }).join("");
+}
+
+function changeFormation(key) {
+  if (!FORMATIONS[key]) return;
+  state.formation = key;
+  rebuildSlots(); // conserve les joueurs déjà placés, réadapte la forme
+  renderFormationOptions();
+  updateAllCards();
+  renderPitch();
+  updateProgress();
+  updateShareState();
+}
+
+/* ── Player list (single pool grouped by position) ───────────────── */
+function renderPlayers() {
+  const el = document.getElementById("playersCol");
+  el.innerHTML = POSITIONS.map(pos => {
+    const cards = PLAYERS[pos].map(p => cardHtml(pos, p)).join("");
+    return `<div class="pos-group">
+      <div class="pos-group-label" style="--lbl:${POS_COLOR[pos]}">
+        <span>${POS_LABEL_FULL[pos]}</span>
+        <span class="pos-group-count" id="count-${pos}"></span>
+      </div>
+      <div class="player-grid">${cards}</div>
+    </div>`;
+  }).join("");
+  updateAllCards();
+}
+
+function cardHtml(pos, p) {
+  const firstName = getFirstName(p.name);
+  const lastName = getLastName(p.name);
+  return `<div class="player-card" data-pos="${pos}" data-id="${p.id}" onclick="selectPlayer('${pos}',${p.id})">
+    <div class="initials" style="background:${POS_COLOR[pos]}">${getInitials(p.name)}</div>
+    <div class="info"><div class="name">${firstName ? `<span class="first">${firstName}</span>` : ""}<span>${lastName}</span></div></div>
+    <div class="check">✓</div>
+  </div>`;
+}
+
+function selectPlayer(pos, id) {
+  const player = PLAYERS[pos].find(p => p.id === id);
+  if (!player) return;
+
+  const slotIdx = state.slots.findIndex(s => s && s.player.id === id);
+  if (slotIdx >= 0) {
+    // Déjà sur le terrain → on le retire (et on cible son emplacement libéré)
+    state.slots[slotIdx] = null;
+    state.active = slotIdx;
+  } else {
+    if (pos === "gk" && placedGk()) return;   // un seul gardien autorisé
+    const target = targetSlotFor();
+    if (target < 0) return;                    // terrain complet
+    state.slots[target] = { player, pos };     // placement explicite, aucun réarrangement
+    state.active = firstEmptySlot();           // -1 si complet
+  }
+
+  updateAllCards();
+  renderPitch();
+  updateProgress();
+  updateShareState();
+}
+
+function updateAllCards() {
+  const full = totalSelected() >= SQUAD_TOTAL;
+  const gkPlaced = placedGk();
+  POSITIONS.forEach(pos => {
+    const n = state.slots.filter(s => s && s.pos === pos).length;
+    const c = document.getElementById("count-" + pos);
+    if (c) {
+      c.textContent = n > 0 ? String(n) : "";
+      c.classList.toggle("done", n > 0);
+    }
+  });
+  document.querySelectorAll(".player-card").forEach(card => {
+    const pos = card.dataset.pos;
+    const id = parseInt(card.dataset.id);
+    const placed = isPlaced(id);
+    card.classList.toggle("selected", placed);
+    card.classList.toggle("disabled", !placed && (full || (pos === "gk" && gkPlaced)));
+  });
+}
+
+/* ── Pitch rendering (uses the chosen formation layout) ──────────── */
+function renderPitch() {
+  const f = FORMATIONS[state.formation];
+  document.getElementById("pitchFormationLabel").textContent = f.label;
+  const container = document.getElementById("pitchZones");
+
+  // Chaque pastille correspond à un emplacement fixe (index global).
+  // Le joueur reste exactement là où il a été placé : aucun tri, aucun réarrangement.
+  let idx = 0;
+  container.innerHTML = f.lines.map(line => {
+    let dots = "";
+    for (let i = 0; i < line.count; i++) {
+      const slotIndex = idx++;
+      const item = state.slots[slotIndex];
+      dots += item ? filledDot(item.player, item.pos, slotIndex)
+                   : emptyDot(line.pos, slotIndex);
+    }
+    return `<div class="pitch-zone ${line.pos}${line.spread ? " spread" : ""}">${dots}</div>`;
+  }).join("");
+}
+
+function filledDot(player, pos, slotIndex) {
+  const lastName = getLastName(player.name);
+  const initials = getInitials(player.name);
+  return `<div class="pitch-dot" data-pos="${pos}" onclick="clickSlot(${slotIndex})" title="Retirer ${player.name}">
+    <div class="dot-circle" style="background:${PITCH_DOT_COLOR}">${initials}</div>
+    <div class="dot-name">${lastName}</div>
+  </div>`;
+}
+
+function emptyDot(pos, slotIndex) {
+  const active = state.active === slotIndex ? " active" : "";
+  return `<div class="pitch-dot empty${active}" data-pos="${pos}" onclick="clickSlot(${slotIndex})">
+    <div class="dot-circle">+</div>
+    <div class="dot-name">—</div>
+  </div>`;
+}
+
+/* Clic sur un emplacement du terrain :
+   - occupé → retire le joueur et cible l'emplacement libéré ;
+   - vide   → le cible pour le prochain joueur (ou le décible si on reclique le même). */
+function clickSlot(i) {
+  if (state.slots[i]) {
+    state.slots[i] = null;
+    state.active = i;
+  } else {
+    state.active = (state.active === i) ? null : i;
+  }
+  updateAllCards();
+  renderPitch();
+  updateProgress();
+  updateShareState();
+}
+
+/* ── Progress + share state ──────────────────────────────────────── */
+function updateProgress() {
+  const total = totalSelected();
+  document.getElementById("totalSelected").textContent = total;
+  document.getElementById("totalRequired").textContent = SQUAD_TOTAL;
+  document.getElementById("progressFill").style.width = (total / SQUAD_TOTAL * 100) + "%";
+}
+
+function updateShareState() {
+  const ready = isSquadValid();
+  document.getElementById("shareSection").classList.toggle("locked", !ready);
+  document.getElementById("shareHint").classList.toggle("hidden", ready);
+}
+
+/* ── Reset ──────────────────────────────────────────────────────── */
+function resetAll() {
+  state.formation = FORMATION_KEYS[0];
+  state.slots = [];
+  rebuildSlots();
+  renderFormationOptions();
+  updateAllCards();
+  renderPitch();
+  updateProgress();
+  updateShareState();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PARENT URL + IFRAME RESIZE (postMessage)
+   ═══════════════════════════════════════════════════════════════════ */
+let _parentUrl = null;
+
+function getShareUrl() {
+  if (_parentUrl) return _parentUrl;
+  try {
+    if (window.top && window.top !== window.self && window.top.location.href) {
+      return window.top.location.href;
+    }
+  } catch (e) {
+    if (document.referrer) return document.referrer;
+  }
+  return window.location.href;
+}
+
+window.addEventListener('message', (e) => {
+  if (e.data && (e.data.type === 'wc2026-url' || e.data.type === 'xilegende-url') && e.data.url) {
+    _parentUrl = e.data.url;
+  }
+});
+
+function setupAutoResize() {
+  if (window.parent === window) return;
+  const postHeight = () => {
+    const widget = document.getElementById('squad-widget');
+    const h = widget
+      ? Math.ceil(widget.getBoundingClientRect().bottom + window.scrollY)
+      : Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    window.parent.postMessage({ type: 'wc2026-resize', height: h }, '*');
+    window.parent.postMessage({ type: 'xilegende-resize', height: h }, '*');
+  };
+  postHeight();
+  window.addEventListener('resize', postHeight);
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(postHeight).observe(document.body);
+  }
+  window.parent.postMessage({ type: 'wc2026-getUrl' }, '*');
+  window.parent.postMessage({ type: 'xilegende-getUrl' }, '*');
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   IMAGE GENERATION & SHARE
+   ═══════════════════════════════════════════════════════════════════ */
+async function generateImage() {
+  const pitchEl = document.getElementById("pitchContainer");
+  await new Promise(r => requestAnimationFrame(r));
+  const canvas = await html2canvas(pitchEl, {
+    backgroundColor: "#2a2a2a",
+    scale: 4,
+    useCORS: true,
+    allowTaint: true,
+    logging: false,
+    imageTimeout: 15000
+  });
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(b => {
+      if (b) resolve(b);
+      else reject(new Error("Canvas non exportable."));
+    }, "image/png");
+  });
+}
+
+async function downloadImage() {
+  try {
+    const blob = await generateImage();
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = I18N.downloadFilename;
+    a.click();
+  } catch (e) {
+    console.error("html2canvas error:", e);
+    const msg = (location.protocol === "file:")
+      ? I18N.errorFileProto
+      : I18N.errorPrefix + (e.message || e);
+    alert(msg);
+  }
+}
+
+function shareOn(platform) {
+  const text = encodeURIComponent(I18N.shareText);
+  const url = encodeURIComponent(getShareUrl());
+  const urls = {
+    x: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`,
+    whatsapp: `https://wa.me/?text=${text}%20${url}`
+  };
+  if (platform === "instagram") {
+    downloadImage();
+    alert(I18N.instagramAlert);
+    return;
+  }
+  if (urls[platform]) window.open(urls[platform], "_blank", "width=600,height=400");
+}
+
+/* ── Start ── */
+init();
+setupAutoResize();
+</script>
+</body>
+</html>
