@@ -508,7 +508,7 @@ function renderPitch() {
       dots += item ? filledDot(item.player, item.pos, slotIndex)
                    : emptyDot(line.pos, slotIndex);
     }
-    const _g = {2:20,3:20,4:10}[line.count];
+    const _g = {2:40,3:40,4:25}[line.count];
     const _gs = (_g != null && !line.spread) ? ` style="gap:${_g}px"` : "";
     return `<div class="pitch-zone ${line.pos}${line.spread ? " spread" : ""}"${_gs}>${dots}</div>`;
   }).join("");
