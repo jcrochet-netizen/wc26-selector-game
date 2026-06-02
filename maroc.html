@@ -84,7 +84,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 /* Pitch dots (compact so a 5-player line — e.g. 5-4-1 — fits the pitch) */
 .pitch-dot{display:flex;flex-direction:column;align-items:center;width:44px;transition:transform .2s}
 .pitch-dot .dot-circle{width:36px;height:36px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:800;color:#fff;letter-spacing:.3px;box-shadow:0 2px 6px rgba(0,0,0,.45)}
-.pitch-dot .dot-name{font-size:.66rem;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9);margin-top:3px;white-space:nowrap;max-width:54px;overflow:hidden;text-overflow:ellipsis}
+.pitch-dot .dot-name{font-size:.66rem;font-weight:600;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.9);margin-top:3px;line-height:1.05;text-align:center;white-space:nowrap}
+.pitch-dot .dot-name.long{font-size:.56rem}
 .pitch-dot{cursor:pointer}
 .pitch-dot.empty .dot-circle{border:2px dashed rgba(255,255,255,.45);background:rgba(255,255,255,.08)!important;color:rgba(255,255,255,.45)}
 .pitch-dot.empty .dot-name{color:rgba(255,255,255,.4)}
@@ -233,7 +234,7 @@ const FORMATIONS = {
   "4-4-2":   { label: "4-4-2",   lines: [ {pos:"att",count:2}, {pos:"mid",count:4}, {pos:"def",count:4}, {pos:"gk",count:1} ] },
   "4-2-3-1": { label: "4-2-3-1", lines: [ {pos:"att",count:1}, {pos:"mid",count:3}, {pos:"mid",count:2}, {pos:"def",count:4}, {pos:"gk",count:1} ] },
   "4-1-4-1": { label: "4-1-4-1", lines: [ {pos:"att",count:1}, {pos:"mid",count:4}, {pos:"mid",count:1}, {pos:"def",count:4}, {pos:"gk",count:1} ] },
-  "3-5-2":   { label: "3-5-2",   lines: [ {pos:"att",count:2}, {pos:"mid",count:2}, {pos:"mid",count:3,spread:true}, {pos:"def",count:3}, {pos:"gk",count:1} ] },
+  "3-5-2":   { label: "3-5-2",   lines: [ {pos:"att",count:2}, {pos:"mid",count:2}, {pos:"mid",count:3}, {pos:"def",count:3}, {pos:"gk",count:1} ] },
   "3-4-3":   { label: "3-4-3",   lines: [ {pos:"att",count:3}, {pos:"mid",count:4}, {pos:"def",count:3}, {pos:"gk",count:1} ] },
   "3-4-2-1": { label: "3-4-2-1", lines: [ {pos:"att",count:1}, {pos:"mid",count:2}, {pos:"mid",count:4}, {pos:"def",count:3}, {pos:"gk",count:1} ] },
   "5-4-1":   { label: "5-4-1",   lines: [ {pos:"att",count:1}, {pos:"mid",count:4}, {pos:"def",count:5,spread:true}, {pos:"gk",count:1} ] }
@@ -503,16 +504,21 @@ function renderPitch() {
       dots += item ? filledDot(item.player, item.pos, slotIndex)
                    : emptyDot(line.pos, slotIndex);
     }
-    return `<div class="pitch-zone ${line.pos}${line.spread ? " spread" : ""}">${dots}</div>`;
+    const _g = {2:20,3:20,4:10}[line.count];
+    const _gs = (_g != null && !line.spread) ? ` style="gap:${_g}px"` : "";
+    return `<div class="pitch-zone ${line.pos}${line.spread ? " spread" : ""}"${_gs}>${dots}</div>`;
   }).join("");
 }
 
 function filledDot(player, pos, slotIndex) {
   const lastName = getLastName(player.name);
+  const _isComp = lastName.includes("-");
+  const _nm = _isComp ? lastName.replace(/-/g, "-<br>") : lastName;
+  const _nmCls = (!_isComp && lastName.length > 8) ? " long" : "";
   const initials = getInitials(player.name);
   return `<div class="pitch-dot" data-pos="${pos}" onclick="clickSlot(${slotIndex})" title="Retirer ${player.name}">
     <div class="dot-circle" style="background:${PITCH_DOT_COLOR}">${initials}</div>
-    <div class="dot-name">${lastName}</div>
+    <div class="dot-name${_nmCls}">${_nm}</div>
   </div>`;
 }
 
