@@ -20,10 +20,10 @@
 }
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.4}
 
-/* ── Widget Container (stacked: selection on top, pitch below) ──── */
-#squad-widget{display:flex;flex-direction:column;gap:24px;width:100%;max-width:720px;margin:0 auto;padding:20px}
-.selector-panel{width:100%;min-width:0}
-.pitch-panel{width:100%;max-width:400px;margin:0 auto}
+/* ── Widget Container (2 columns: selection | live pitch, max 720) ─ */
+#squad-widget{display:flex;gap:20px;width:100%;max-width:720px;margin:0 auto;padding:20px;align-items:flex-start}
+.selector-panel{flex:1;min-width:0}
+.pitch-panel{width:300px;flex-shrink:0;position:sticky;top:20px}
 
 /* ── Formation selector ─────────────────────────────────────────── */
 .formation-bar{margin-bottom:16px}
@@ -48,7 +48,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .pos-group-label::before{content:"";width:16px;height:4px;border-radius:2px;background:var(--lbl)}
 .pos-group-count{margin-left:auto;font-weight:700;color:var(--text-muted)}
 .pos-group-count.done{color:var(--done-text)}
-.player-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.player-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .player-card{display:flex;align-items:center;gap:6px;background:var(--card);border:2px solid transparent;border-radius:var(--radius);padding:6px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;min-width:0}
 .player-card:hover:not(.disabled){border-color:var(--accent);background:var(--card-hover)}
 .player-card.selected{border-color:var(--accent);background:var(--card-selected)}
@@ -110,17 +110,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .reset-btn:hover{border-color:var(--accent-light);color:var(--accent-light)}
 
 /* ── Responsive ─────────────────────────────────────────────────── */
-@media(max-width:800px){
+@media(max-width:640px){
   #squad-widget{flex-direction:column;padding:12px;gap:16px}
-  .pitch-panel{width:100%;position:static}
-  .pitch-panel .pitch-container{max-width:400px;margin:0 auto}
+  .pitch-panel{width:100%;max-width:400px;margin:0 auto;position:static}
   .pitch{padding-bottom:120%}
-  .player-grid{grid-template-columns:repeat(3,1fr)}
-}
-@media(max-width:600px){
-  .player-grid{grid-template-columns:repeat(2,1fr);gap:6px}
   .player-card{padding:7px;gap:7px}
-  .player-card .initials{width:36px;height:36px;font-size:.74rem}
   .player-card .name{font-size:.72rem}
   .pitch-dot{width:46px}
   .pitch-dot .dot-circle{width:38px;height:38px;font-size:.78rem}
