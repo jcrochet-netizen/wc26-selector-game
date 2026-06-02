@@ -517,7 +517,7 @@ function filledDot(player, pos, slotIndex) {
   const lastName = getLastName(player.name);
   const _isComp = lastName.includes("-");
   const _nm = _isComp ? lastName.replace(/-/g, "-<br>") : lastName;
-  const _nmCls = (!_isComp && lastName.length > 8) ? " long" : "";
+  const _nmCls = ""; // règle "nom long = plus petit" désactivée (écarts désormais plus grands)
   const initials = getInitials(player.name);
   return `<div class="pitch-dot" data-pos="${pos}" onclick="clickSlot(${slotIndex})" title="Retirer ${player.name}">
     <div class="dot-circle" style="background:${PITCH_DOT_COLOR};border-color:${PITCH_DOT_BORDER};color:${PITCH_DOT_TEXT}">${initials}</div>
