@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Compose ton XI de départ de l'Afrique du Sud pour la Coupe du Monde 2026 | Afrik-Foot</title>
-<meta name="description" content="Choisis ton schéma tactique et compose tes 11 titulaires de l'Afrique du Sud pour la Coupe du Monde 2026. Aperçu en direct sur le terrain. Partage ta compo !">
+<title>Pick your South Africa starting XI | Afrik-Foot</title>
+<meta name="description" content="Choose your formation and build your South Africa starting XI. Live pitch preview — share your lineup!">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
 /* ── Reset & Variables ──────────────────────────────────────────── */
@@ -151,22 +151,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
     <!-- Progress -->
     <div class="progress">
-      <div class="progress-text"><span class="done" id="totalSelected">0</span> / <span id="totalRequired">11</span> titulaires</div>
+      <div class="progress-text"><span class="done" id="totalSelected">0</span> / <span id="totalRequired">11</span> starters</div>
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
 
-    <div class="place-hint">Astuce : clique un emplacement sur le terrain, puis un joueur, pour le positionner exactement où tu veux (même hors de son poste).</div>
+    <div class="place-hint">Tip: click a spot on the pitch, then a player, to position him exactly where you want — even out of his usual role.</div>
 
     <!-- Single pool, grouped by position (non-clickable labels) -->
     <div class="players-col" id="playersCol"></div>
 
-    <button class="reset-btn" onclick="resetAll()">↺ Réinitialiser</button>
+    <button class="reset-btn" onclick="resetAll()">↺ Reset</button>
   </div>
 
   <!-- ═══ RIGHT: Live pitch + Share ═══ -->
   <div class="pitch-panel">
     <div class="pitch-container" id="pitchContainer">
-      <div class="pitch-title"><span id="pitchTitleText">Mon XI pour l'Afrique du Sud</span><strong id="pitchFormationLabel">4-3-3</strong></div>
+      <div class="pitch-title"><span id="pitchTitleText">My South Africa XI</span><strong id="pitchFormationLabel">4-3-3</strong></div>
       <div class="pitch" id="pitch">
         <div class="pitch-lines">
           <div class="halfway"></div>
@@ -180,10 +180,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
     <div class="share-section locked" id="shareSection">
-      <div class="share-hint" id="shareHint">Complète ton XI pour partager</div>
-      <button class="share-btn dl" onclick="downloadImage()">📥 Télécharger l'image</button>
+      <div class="share-hint" id="shareHint">Complete your XI to share</div>
+      <button class="share-btn dl" onclick="downloadImage()">📥 Download image</button>
       <div class="share-buttons">
-        <button class="share-btn x"  onclick="shareOn('x')">𝕏 Partager</button>
+        <button class="share-btn x"  onclick="shareOn('x')">𝕏 Share</button>
         <button class="share-btn fb" onclick="shareOn('facebook')">Facebook</button>
         <button class="share-btn wa" onclick="shareOn('whatsapp')">WhatsApp</button>
         <button class="share-btn ig" onclick="shareOn('instagram')">Instagram</button>
@@ -201,23 +201,23 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
    ═══════════════════════════════════════════════════════════════════ */
 
 const COUNTRY = {
-  name: "Afrique du Sud",
-  htmlLang: "fr"
+  name: "South Africa",
+  htmlLang: "en"
 };
 
 const I18N = {
-  pageTitle: "Compose ton XI de départ de l'Afrique du Sud pour la Coupe du Monde 2026 | Afrik-Foot",
-  pitchTitle: "Mon XI pour l'Afrique du Sud",          // titre affiché au-dessus du terrain (modal)
-  posGkFull: "Gardiens",
-  posDefFull: "Défenseurs",
-  posMidFull: "Milieux",
-  posAttFull: "Attaquants",
-  shareHintIncomplete: "Complète ton XI pour partager",
-  shareText: "Voici mon XI de départ de l'Afrique du Sud pour la Coupe du Monde 2026 ! Et toi, quelle est ta compo ? Compose la tienne ici :",
-  instagramAlert: "Image téléchargée ! Partage-la directement sur Instagram.",
-  errorFileProto: "La capture locale est bloquée en ouverture directe (file://). Lance un serveur local (ex : python3 -m http.server) ou teste sur WordPress.",
-  errorPrefix: "Erreur : ",
-  downloadFilename: "ma-compo-afrique-du-sud-cdm2026.png"
+  pageTitle: "Pick your South Africa starting XI | Afrik-Foot",
+  pitchTitle: "My South Africa XI",          // titre affiché au-dessus du terrain (modal)
+  posGkFull: "Goalkeepers",
+  posDefFull: "Defenders",
+  posMidFull: "Midfielders",
+  posAttFull: "Forwards",
+  shareHintIncomplete: "Complete your XI to share",
+  shareText: "Here is my South Africa starting XI for the 2026 World Cup! What's yours? Build it here:",
+  instagramAlert: "Image downloaded! Share it directly on Instagram.",
+  errorFileProto: "Local capture is blocked when opened directly (file://). Run a local server (e.g. python3 -m http.server) or test on WordPress.",
+  errorPrefix: "Error: ",
+  downloadFilename: "my-south-africa-xi.png"
 };
 
 /* Style des pastilles sur le terrain (modal) — identique pour tous les joueurs.
@@ -361,7 +361,7 @@ function targetSlotFor() {
   return firstEmptySlot();
 }
 
-/* La seule règle : 11 titulaires placés (et un seul gardien, géré à la sélection). */
+/* Only rule: 11 starters placed (and a single goalkeeper, handled on selection). */
 function isSquadValid() {
   return totalSelected() === SQUAD_TOTAL;
 }
