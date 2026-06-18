@@ -54,6 +54,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .player-card.selected{border-color:var(--accent);background:var(--card-selected)}
 .player-card.disabled{opacity:.35;pointer-events:none}
 .player-card .initials{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.2px}
+.player-card .initials.photo{background-size:cover;background-position:center top;background-repeat:no-repeat;background-color:#dfe3e8}
 .player-card .info{flex:1;min-width:0;overflow:hidden}
 .player-card .name{font-size:.72rem;font-weight:600;line-height:1.25}
 .player-card .name span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -247,40 +248,40 @@ const SQUAD_TOTAL = 11;
 /* Effectif sénégalais (source : liste fournie). */
 const PLAYERS = {
   gk: [
-    { id: 1, name: "Édouard Mendy" },
-    { id: 2, name: "Mory Diaw" },
-    { id: 3, name: "Yehvann Diouf" }
+    { id: 1, name: "Édouard Mendy", photo: "https://cdn.sportmonks.com/images/soccer/players/1/99137.png" },
+    { id: 2, name: "Mory Diaw", photo: "https://cdn.sportmonks.com/images/soccer/players/20/162164.png" },
+    { id: 3, name: "Yehvann Diouf", photo: "https://cdn.sportmonks.com/images/soccer/players/21/99157.png" }
   ],
   def: [
-    { id: 20, name: "Kalidou Koulibaly" },
-    { id: 21, name: "Krépin Diatta" },
-    { id: 22, name: "Moussa Niakhaté" },
-    { id: 23, name: "Ismail Jakobs" },
-    { id: 24, name: "Abdoulaye Seck" },
-    { id: 25, name: "El Hadji Malick Diouf" },
-    { id: 26, name: "Mamadou Sarr" },
-    { id: 27, name: "Antoine Mendy" },
-    { id: 28, name: "Ilay Camara" },
-    { id: 29, name: "Moustapha Mbow" }
+    { id: 20, name: "Kalidou Koulibaly", photo: "https://cdn.sportmonks.com/images/soccer/players/14/61806.png" },
+    { id: 21, name: "Krépin Diatta", photo: "https://cdn.sportmonks.com/images/soccer/players/3/430403.png" },
+    { id: 22, name: "Moussa Niakhaté", photo: "https://cdn.sportmonks.com/images/soccer/players/26/98874.png" },
+    { id: 23, name: "Ismail Jakobs", photo: "https://cdn.sportmonks.com/images/soccer/players/24/3861304.png" },
+    { id: 24, name: "Abdoulaye Seck", photo: "https://cdn.sportmonks.com/images/soccer/players/28/153244.png" },
+    { id: 25, name: "El Hadji Malick Diouf", photo: "https://cdn.sportmonks.com/images/soccer/players/30/37685630.png" },
+    { id: 26, name: "Mamadou Sarr", photo: "https://cdn.sportmonks.com/images/soccer/players/24/37532344.png" },
+    { id: 27, name: "Antoine Mendy", photo: "https://cdn.sportmonks.com/images/soccer/players/23/37569271.png" },
+    { id: 28, name: "Ilay Camara", photo: "https://cdn.sportmonks.com/images/soccer/players/13/37637485.png" },
+    { id: 29, name: "Moustapha Mbow", photo: "https://cdn.sportmonks.com/images/soccer/players/24/29336632.png" }
   ],
   mid: [
-    { id: 50, name: "Idrissa Gueye" },
-    { id: 51, name: "Pape Gueye" },
-    { id: 52, name: "Pape Matar Sarr" },
-    { id: 53, name: "Lamine Camara" },
-    { id: 54, name: "Pathé Ciss" },
-    { id: 55, name: "Habib Diarra" },
-    { id: 56, name: "Bara Sapoko Ndiaye" }
+    { id: 50, name: "Idrissa Gueye", photo: "https://cdn.sportmonks.com/images/soccer/players/6/1030.png" },
+    { id: 51, name: "Pape Gueye", photo: "https://cdn.sportmonks.com/images/soccer/players/17/433169.png" },
+    { id: 52, name: "Pape Matar Sarr", photo: "https://cdn.sportmonks.com/images/soccer/players/6/37342694.png" },
+    { id: 53, name: "Lamine Camara", photo: "https://cdn.sportmonks.com/images/soccer/players/20/37642676.png" },
+    { id: 54, name: "Pathé Ciss", photo: "https://cdn.sportmonks.com/images/soccer/players/24/2511096.png" },
+    { id: 55, name: "Habib Diarra", photo: "https://cdn.sportmonks.com/images/soccer/players/8/37581992.png" },
+    { id: 56, name: "Bara Sapoko Ndiaye", photo: "https://cdn.sportmonks.com/images/soccer/players/14/38212654.png" }
   ],
   att: [
-    { id: 80, name: "Sadio Mané" },
-    { id: 81, name: "Ismaïla Sarr" },
-    { id: 82, name: "Iliman Ndiaye" },
-    { id: 83, name: "Nicolas Jackson" },
-    { id: 84, name: "Bamba Dieng" },
-    { id: 85, name: "Cherif Ndiaye" },
-    { id: 86, name: "Ibrahim Mbaye" },
-    { id: 87, name: "Assane Diao" }
+    { id: 80, name: "Sadio Mané", photo: "https://cdn.sportmonks.com/images/soccer/players/13/1389.png" },
+    { id: 81, name: "Ismaïla Sarr", photo: "https://cdn.sportmonks.com/images/soccer/players/18/96722.png" },
+    { id: 82, name: "Iliman Ndiaye", photo: "https://cdn.sportmonks.com/images/soccer/players/24/23661272.png" },
+    { id: 83, name: "Nicolas Jackson", photo: "https://cdn.sportmonks.com/images/soccer/players/13/37540621.png" },
+    { id: 84, name: "Bamba Dieng", photo: "https://cdn.sportmonks.com/images/soccer/players/30/37541438.png" },
+    { id: 85, name: "Cherif Ndiaye", photo: "https://cdn.sportmonks.com/images/soccer/players/28/64188.png" },
+    { id: 86, name: "Ibrahim Mbaye", photo: "https://cdn.sportmonks.com/images/soccer/players/15/37726575.png" },
+    { id: 87, name: "Assane Diao", photo: "https://cdn.sportmonks.com/images/soccer/players/18/37674290.png" }
   ]
 };
 
@@ -441,8 +442,11 @@ function renderPlayers() {
 function cardHtml(pos, p) {
   const firstName = getFirstName(p.name);
   const lastName = getLastName(p.name);
+  const av = p.photo
+    ? `class="initials photo" style="background-image:url('${p.photo}')"`
+    : `class="initials" style="background:${POS_COLOR[pos]}"`;
   return `<div class="player-card" data-pos="${pos}" data-id="${p.id}" onclick="selectPlayer('${pos}',${p.id})">
-    <div class="initials" style="background:${POS_COLOR[pos]}">${getInitials(p.name)}</div>
+    <div ${av}>${p.photo ? "" : getInitials(p.name)}</div>
     <div class="info"><div class="name">${firstName ? `<span class="first">${firstName}</span>` : ""}<span>${lastName}</span></div></div>
     <div class="check">✓</div>
   </div>`;
@@ -520,8 +524,11 @@ function filledDot(player, pos, slotIndex) {
   const _nm = _isComp ? lastName.replace(/-/g, "-<br>") : lastName;
   const _nmCls = ""; // règle "nom long = plus petit" désactivée (écarts désormais plus grands)
   const initials = getInitials(player.name);
+  const circleStyle = player.photo
+    ? `background-image:url('${player.photo}');background-size:cover;background-position:center top;border-color:${PITCH_DOT_BORDER}`
+    : `background:${PITCH_DOT_COLOR};border-color:${PITCH_DOT_BORDER};color:${PITCH_DOT_TEXT}`;
   return `<div class="pitch-dot" data-pos="${pos}" onclick="clickSlot(${slotIndex})" title="Retirer ${player.name}">
-    <div class="dot-circle" style="background:${PITCH_DOT_COLOR};border-color:${PITCH_DOT_BORDER};color:${PITCH_DOT_TEXT}">${initials}</div>
+    <div class="dot-circle" style="${circleStyle}">${player.photo ? "" : initials}</div>
     <div class="dot-name${_nmCls}">${_nm}</div>
   </div>`;
 }

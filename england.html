@@ -54,6 +54,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .player-card.selected{border-color:var(--accent);background:var(--card-selected)}
 .player-card.disabled{opacity:.35;pointer-events:none}
 .player-card .initials{width:26px;height:26px;border-radius:50%;border:2px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.2px}
+.player-card .initials.photo{background-size:cover;background-position:center top;background-repeat:no-repeat;background-color:#dfe3e8}
 .player-card .info{flex:1;min-width:0;overflow:hidden}
 .player-card .name{font-size:.72rem;font-weight:600;line-height:1.25}
 .player-card .name span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -234,38 +235,38 @@ const SQUAD_TOTAL = 11;
 /* England squad (source: provided list). */
 const PLAYERS = {
   gk: [
-    { id: 1, name: "Jordan Pickford" },
-    { id: 2, name: "Dean Henderson" },
-    { id: 3, name: "James Trafford" }
+    { id: 1, name: "Jordan Pickford", photo: "https://cdn.sportmonks.com/images/soccer/players/2/1826.png" },
+    { id: 2, name: "Dean Henderson", photo: "https://cdn.sportmonks.com/images/soccer/players/7/12647.png" },
+    { id: 3, name: "James Trafford", photo: "https://cdn.sportmonks.com/images/soccer/players/6/28575686.png" }
   ],
   def: [
-    { id: 20, name: "Ezri Konsa" },
-    { id: 21, name: "Nico O'Reilly" },
-    { id: 22, name: "John Stones" },
-    { id: 23, name: "Marc Guéhi" },
-    { id: 24, name: "Tino Livramento" },
-    { id: 25, name: "Dan Burn" },
-    { id: 26, name: "Reece James" },
-    { id: 27, name: "Djed Spence" },
-    { id: 28, name: "Jarell Quansah" }
+    { id: 20, name: "Ezri Konsa", photo: "https://cdn.sportmonks.com/images/soccer/players/20/7124.png" },
+    { id: 21, name: "Nico O'Reilly", photo: "https://cdn.sportmonks.com/images/soccer/players/23/37562487.png" },
+    { id: 22, name: "John Stones", photo: "https://cdn.sportmonks.com/images/soccer/players/22/982.png" },
+    { id: 23, name: "Marc Guéhi", photo: "https://cdn.sportmonks.com/images/soccer/players/20/4536500.png" },
+    { id: 24, name: "Trevoh Chalobah", photo: "https://cdn.sportmonks.com/images/soccer/players/29/537117.png" },
+    { id: 25, name: "Dan Burn", photo: "https://cdn.sportmonks.com/images/soccer/players/31/2815.png" },
+    { id: 26, name: "Reece James", photo: "https://cdn.sportmonks.com/images/soccer/players/4/581220.png" },
+    { id: 27, name: "Djed Spence", photo: "https://cdn.sportmonks.com/images/soccer/players/13/7026573.png" },
+    { id: 28, name: "Jarell Quansah", photo: "https://cdn.sportmonks.com/images/soccer/players/27/37259163.png" }
   ],
   mid: [
-    { id: 50, name: "Declan Rice" },
-    { id: 51, name: "Elliot Anderson" },
-    { id: 52, name: "Jude Bellingham" },
-    { id: 53, name: "Jordan Henderson" },
-    { id: 54, name: "Kobbie Mainoo" },
-    { id: 55, name: "Morgan Rogers" },
-    { id: 56, name: "Eberechi Eze" }
+    { id: 50, name: "Declan Rice", photo: "https://cdn.sportmonks.com/images/soccer/players/25/5273.png" },
+    { id: 51, name: "Elliot Anderson", photo: "https://cdn.sportmonks.com/images/soccer/players/15/332047.png" },
+    { id: 52, name: "Jude Bellingham", photo: "https://cdn.sportmonks.com/images/soccer/players/0/37255840.png" },
+    { id: 53, name: "Jordan Henderson", photo: "https://cdn.sportmonks.com/images/soccer/players/3/323.png" },
+    { id: 54, name: "Kobbie Mainoo", photo: "https://cdn.sportmonks.com/images/soccer/players/10/37540234.png" },
+    { id: 55, name: "Morgan Rogers", photo: "https://cdn.sportmonks.com/images/soccer/players/6/4592198.png" },
+    { id: 56, name: "Eberechi Eze", photo: "https://cdn.sportmonks.com/images/soccer/players/27/7643.png" }
   ],
   att: [
-    { id: 80, name: "Bukayo Saka" },
-    { id: 81, name: "Harry Kane" },
-    { id: 82, name: "Marcus Rashford" },
-    { id: 83, name: "Anthony Gordon" },
-    { id: 84, name: "Ollie Watkins" },
-    { id: 85, name: "Noni Madueke" },
-    { id: 86, name: "Ivan Toney" }
+    { id: 80, name: "Bukayo Saka", photo: "https://cdn.sportmonks.com/images/soccer/players/19/16827155.png" },
+    { id: 81, name: "Harry Kane", photo: "https://cdn.sportmonks.com/images/soccer/players/5/997.png" },
+    { id: 82, name: "Marcus Rashford", photo: "https://cdn.sportmonks.com/images/soccer/players/22/1878.png" },
+    { id: 83, name: "Anthony Gordon", photo: "https://cdn.sportmonks.com/images/soccer/players/23/9611543.png" },
+    { id: 84, name: "Ollie Watkins", photo: "https://cdn.sportmonks.com/images/soccer/players/17/12145.png" },
+    { id: 85, name: "Noni Madueke", photo: "https://cdn.sportmonks.com/images/soccer/players/30/25217662.png" },
+    { id: 86, name: "Ivan Toney", photo: "https://cdn.sportmonks.com/images/soccer/players/21/4341.png" }
   ]
 };
 
@@ -425,8 +426,11 @@ function renderPlayers() {
 function cardHtml(pos, p) {
   const firstName = getFirstName(p.name);
   const lastName = getLastName(p.name);
+  const av = p.photo
+    ? `class="initials photo" style="background-image:url('${p.photo}')"`
+    : `class="initials" style="background:${POS_COLOR[pos]}"`;
   return `<div class="player-card" data-pos="${pos}" data-id="${p.id}" onclick="selectPlayer('${pos}',${p.id})">
-    <div class="initials" style="background:${POS_COLOR[pos]}">${getInitials(p.name)}</div>
+    <div ${av}>${p.photo ? "" : getInitials(p.name)}</div>
     <div class="info"><div class="name">${firstName ? `<span class="first">${firstName}</span>` : ""}<span>${lastName}</span></div></div>
     <div class="check">✓</div>
   </div>`;
@@ -501,8 +505,11 @@ function renderPitch() {
 function filledDot(player, pos, slotIndex) {
   const lastName = getLastName(player.name);
   const initials = getInitials(player.name);
+  const circleStyle = player.photo
+    ? `background-image:url('${player.photo}');background-size:cover;background-position:center top`
+    : `background:${PITCH_DOT_COLOR}`;
   return `<div class="pitch-dot" data-pos="${pos}" onclick="clickSlot(${slotIndex})" title="Retirer ${player.name}">
-    <div class="dot-circle" style="background:${PITCH_DOT_COLOR}">${initials}</div>
+    <div class="dot-circle" style="${circleStyle}">${player.photo ? "" : initials}</div>
     <div class="dot-name">${lastName}</div>
   </div>`;
 }

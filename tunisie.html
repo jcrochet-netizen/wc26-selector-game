@@ -54,6 +54,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .player-card.selected{border-color:var(--accent);background:var(--card-selected)}
 .player-card.disabled{opacity:.35;pointer-events:none}
 .player-card .initials{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.2px}
+.player-card .initials.photo{background-size:cover;background-position:center top;background-repeat:no-repeat;background-color:#dfe3e8}
 .player-card .info{flex:1;min-width:0;overflow:hidden}
 .player-card .name{font-size:.72rem;font-weight:600;line-height:1.25}
 .player-card .name span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -247,38 +248,38 @@ const SQUAD_TOTAL = 11;
 /* Effectif tunisien (source : liste fournie). */
 const PLAYERS = {
   gk: [
-    { id: 1, name: "Mouhib Chamakh" },
-    { id: 2, name: "Aymen Dahmen" },
-    { id: 3, name: "Sabri Ben Hessen" }
+    { id: 1, name: "Mouhib Chamakh", photo: "https://cdn.sportmonks.com/images/soccer/players/13/17176205.png" },
+    { id: 2, name: "Aymen Dahmen", photo: "https://cdn.sportmonks.com/images/soccer/players/22/600694.png" },
+    { id: 3, name: "Sabri Ben Hessen", photo: "https://cdn.sportmonks.com/images/soccer/players/27/430779.png" }
   ],
   def: [
-    { id: 20, name: "Ali Abdi" },
-    { id: 21, name: "Montassar Talbi" },
-    { id: 22, name: "Omar Rekik" },
-    { id: 23, name: "Adem Arous" },
-    { id: 24, name: "Dylan Bronn" },
-    { id: 25, name: "Mortadha Ben Ouanes" },
-    { id: 26, name: "Yan Valery" },
-    { id: 27, name: "Mohamed Amine Ben Hamida" },
-    { id: 28, name: "Moutaz Neffati" },
-    { id: 29, name: "Raed Chikhaoui" }
+    { id: 20, name: "Ali Abdi", photo: "https://cdn.sportmonks.com/images/soccer/players/14/305358.png" },
+    { id: 21, name: "Montassar Talbi", photo: "https://cdn.sportmonks.com/images/soccer/players/19/430355.png" },
+    { id: 22, name: "Omar Rekik", photo: "https://cdn.sportmonks.com/images/soccer/players/23/21414391.png" },
+    { id: 23, name: "Adem Arous", photo: "https://cdn.sportmonks.com/images/soccer/players/4/37667492.png" },
+    { id: 24, name: "Dylan Bronn", photo: "https://cdn.sportmonks.com/images/soccer/players/24/99064.png" },
+    { id: 25, name: "Mortadha Ben Ouanes", photo: "https://cdn.sportmonks.com/images/soccer/players/30/305950.png" },
+    { id: 26, name: "Yan Valery", photo: "https://cdn.sportmonks.com/images/soccer/players/19/581043.png" },
+    { id: 27, name: "Mohamed Amine Ben Hamida", photo: "https://cdn.sportmonks.com/images/soccer/players/23/466999.png" },
+    { id: 28, name: "Moutaz Neffati", photo: "https://cdn.sportmonks.com/images/soccer/players/20/37644692.png" },
+    { id: 29, name: "Raed Chikhaoui", photo: "https://cdn.sportmonks.com/images/soccer/players/6/37669542.png" }
   ],
   mid: [
-    { id: 50, name: "Hannibal Mejbri" },
-    { id: 51, name: "Ismaël Gharbi" },
-    { id: 52, name: "Rani Khedira" },
-    { id: 53, name: "Hadj Mahmoud" },
-    { id: 54, name: "Ellyes Skhiri" },
-    { id: 55, name: "Anis Ben Slimane" }
+    { id: 50, name: "Hannibal Mejbri", photo: "https://cdn.sportmonks.com/images/soccer/players/26/37316858.png" },
+    { id: 51, name: "Ismaël Gharbi", photo: "https://cdn.sportmonks.com/images/soccer/players/25/37566137.png" },
+    { id: 52, name: "Rani Khedira", photo: "https://cdn.sportmonks.com/images/soccer/players/3/31907.png" },
+    { id: 53, name: "Hadj Mahmoud", photo: "https://cdn.sportmonks.com/images/soccer/players/25/35709049.png" },
+    { id: 54, name: "Ellyes Skhiri", photo: "https://cdn.sportmonks.com/images/soccer/players/12/96364.png" },
+    { id: 55, name: "Anis Ben Slimane", photo: "https://cdn.sportmonks.com/images/soccer/players/3/37357411.png" }
   ],
   att: [
-    { id: 80, name: "Elias Achouri" },
-    { id: 81, name: "Elias Saad" },
-    { id: 82, name: "Hazem Mastouri" },
-    { id: 83, name: "Khalil Ayari" },
-    { id: 84, name: "Rayan Elloumi" },
-    { id: 85, name: "Firas Chaouat" },
-    { id: 86, name: "Sebastian Tounekti" }
+    { id: 80, name: "Elias Achouri", photo: "https://cdn.sportmonks.com/images/soccer/players/7/21413511.png" },
+    { id: 81, name: "Elias Saad", photo: "https://cdn.sportmonks.com/images/soccer/players/13/37579757.png" },
+    { id: 82, name: "Hazem Mastouri", photo: "https://cdn.sportmonks.com/images/soccer/players/21/37603157.png" },
+    { id: 83, name: "Khalil Ayari", photo: "https://cdn.sportmonks.com/images/soccer/players/2/37744066.png" },
+    { id: 84, name: "Rayan Elloumi", photo: "https://cdn.sportmonks.com/images/soccer/players/19/37758643.png" },
+    { id: 85, name: "Firas Chaouat", photo: "https://cdn.sportmonks.com/images/soccer/players/29/467005.png" },
+    { id: 86, name: "Sebastian Tounekti", photo: "https://cdn.sportmonks.com/images/soccer/players/7/15169863.png" }
   ]
 };
 
@@ -439,8 +440,11 @@ function renderPlayers() {
 function cardHtml(pos, p) {
   const firstName = getFirstName(p.name);
   const lastName = getLastName(p.name);
+  const av = p.photo
+    ? `class="initials photo" style="background-image:url('${p.photo}')"`
+    : `class="initials" style="background:${POS_COLOR[pos]}"`;
   return `<div class="player-card" data-pos="${pos}" data-id="${p.id}" onclick="selectPlayer('${pos}',${p.id})">
-    <div class="initials" style="background:${POS_COLOR[pos]}">${getInitials(p.name)}</div>
+    <div ${av}>${p.photo ? "" : getInitials(p.name)}</div>
     <div class="info"><div class="name">${firstName ? `<span class="first">${firstName}</span>` : ""}<span>${lastName}</span></div></div>
     <div class="check">✓</div>
   </div>`;
@@ -518,8 +522,11 @@ function filledDot(player, pos, slotIndex) {
   const _nm = _isComp ? lastName.replace(/-/g, "-<br>") : lastName;
   const _nmCls = ""; // règle "nom long = plus petit" désactivée (écarts désormais plus grands)
   const initials = getInitials(player.name);
+  const circleStyle = player.photo
+    ? `background-image:url('${player.photo}');background-size:cover;background-position:center top;border-color:${PITCH_DOT_BORDER}`
+    : `background:${PITCH_DOT_COLOR};border-color:${PITCH_DOT_BORDER};color:${PITCH_DOT_TEXT}`;
   return `<div class="pitch-dot" data-pos="${pos}" onclick="clickSlot(${slotIndex})" title="Retirer ${player.name}">
-    <div class="dot-circle" style="background:${PITCH_DOT_COLOR};border-color:${PITCH_DOT_BORDER};color:${PITCH_DOT_TEXT}">${initials}</div>
+    <div class="dot-circle" style="${circleStyle}">${player.photo ? "" : initials}</div>
     <div class="dot-name${_nmCls}">${_nm}</div>
   </div>`;
 }
