@@ -54,6 +54,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .player-card.selected{border-color:var(--accent);background:var(--card-selected)}
 .player-card.disabled{opacity:.35;pointer-events:none}
 .player-card .initials{width:26px;height:26px;border-radius:50%;border:2px solid rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.2px}
+.player-card .initials.photo{background-size:cover;background-position:center top;background-repeat:no-repeat;background-color:#dfe3e8}
 .player-card .info{flex:1;min-width:0;overflow:hidden}
 .player-card .name{font-size:.72rem;font-weight:600;line-height:1.25}
 .player-card .name span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -244,41 +245,42 @@ const FORMATIONS = {
 
 const SQUAD_TOTAL = 11;
 
-/* Elenco do Brasil (fonte: lista fornecida). */
+/* Elenco do Brasil (fonte: lista fornecida).
+   "photo" : foto do jogador (CDN SportMonks). Sem "photo" → mostra as iniciais. */
 const PLAYERS = {
   gk: [
-    { id: 1, name: "Alisson" },
-    { id: 2, name: "Weverton" },
-    { id: 3, name: "Ederson" }
+    { id: 1, name: "Alisson", photo: "https://cdn.sportmonks.com/images/soccer/players/28/129820.png" },
+    { id: 2, name: "Weverton", photo: "https://cdn.sportmonks.com/images/soccer/players/23/218295.png" },
+    { id: 3, name: "Ederson", photo: "https://cdn.sportmonks.com/images/soccer/players/6/159142.png" }
   ],
   def: [
     { id: 20, name: "Wesley" },
-    { id: 21, name: "Gabriel Magalhães" },
-    { id: 22, name: "Marquinhos" },
-    { id: 23, name: "Alex Sandro" },
-    { id: 24, name: "Danilo Luiz" },
-    { id: 25, name: "Bremer" },
-    { id: 26, name: "Léo Pereira" },
-    { id: 27, name: "Douglas Santos" },
-    { id: 28, name: "Roger Ibañez" }
+    { id: 21, name: "Gabriel Magalhães", photo: "https://cdn.sportmonks.com/images/soccer/players/19/97811.png" },
+    { id: 22, name: "Marquinhos", photo: "https://cdn.sportmonks.com/images/soccer/players/16/96208.png" },
+    { id: 23, name: "Alex Sandro", photo: "https://cdn.sportmonks.com/images/soccer/players/29/129725.png" },
+    { id: 24, name: "Danilo Luiz", photo: "https://cdn.sportmonks.com/images/soccer/players/8/159208.png" },
+    { id: 25, name: "Bremer", photo: "https://cdn.sportmonks.com/images/soccer/players/23/1167415.png" },
+    { id: 26, name: "Léo Pereira", photo: "https://cdn.sportmonks.com/images/soccer/players/23/218871.png" },
+    { id: 27, name: "Douglas Santos", photo: "https://cdn.sportmonks.com/images/soccer/players/6/32614.png" },
+    { id: 28, name: "Roger Ibañez", photo: "https://cdn.sportmonks.com/images/soccer/players/15/467567.png" }
   ],
   mid: [
-    { id: 50, name: "Casemiro" },
-    { id: 51, name: "Bruno Guimarães" },
-    { id: 52, name: "Fabinho" },
-    { id: 53, name: "Danilo Santos" },
-    { id: 54, name: "Lucas Paquetá" }
+    { id: 50, name: "Casemiro", photo: "https://cdn.sportmonks.com/images/soccer/players/20/159700.png" },
+    { id: 51, name: "Bruno Guimarães", photo: "https://cdn.sportmonks.com/images/soccer/players/9/459145.png" },
+    { id: 52, name: "Fabinho", photo: "https://cdn.sportmonks.com/images/soccer/players/3/96099.png" },
+    { id: 53, name: "Danilo Santos", photo: "https://cdn.sportmonks.com/images/soccer/players/5/37533413.png" },
+    { id: 54, name: "Lucas Paquetá", photo: "https://cdn.sportmonks.com/images/soccer/players/20/220052.png" }
   ],
   att: [
-    { id: 80, name: "Vinícius Júnior" },
-    { id: 81, name: "Matheus Cunha" },
-    { id: 82, name: "Neymar" },
-    { id: 83, name: "Raphinha" },
-    { id: 84, name: "Endrick" },
-    { id: 85, name: "Luiz Henrique" },
-    { id: 86, name: "Gabriel Martinelli" },
-    { id: 87, name: "Igor Thiago" },
-    { id: 88, name: "Rayan" }
+    { id: 80, name: "Vinícius Júnior", photo: "https://cdn.sportmonks.com/images/soccer/players/15/600687.png" },
+    { id: 81, name: "Matheus Cunha", photo: "https://cdn.sportmonks.com/images/soccer/players/19/1846739.png" },
+    { id: 82, name: "Neymar", photo: "https://cdn.sportmonks.com/images/soccer/players/16/186320.png" },
+    { id: 83, name: "Raphinha", photo: "https://cdn.sportmonks.com/images/soccer/players/2/160258.png" },
+    { id: 84, name: "Endrick", photo: "https://cdn.sportmonks.com/images/soccer/players/1/37647009.png" },
+    { id: 85, name: "Luiz Henrique", photo: "https://cdn.sportmonks.com/images/soccer/players/24/37526008.png" },
+    { id: 86, name: "Gabriel Martinelli", photo: "https://cdn.sportmonks.com/images/soccer/players/28/10959356.png" },
+    { id: 87, name: "Igor Thiago", photo: "https://cdn.sportmonks.com/images/soccer/players/4/37407204.png" },
+    { id: 88, name: "Rayan", photo: "https://cdn.sportmonks.com/images/soccer/players/15/37679567.png" }
   ]
 };
 
@@ -439,8 +441,11 @@ function renderPlayers() {
 function cardHtml(pos, p) {
   const firstName = getFirstName(p.name);
   const lastName = getLastName(p.name);
+  const av = p.photo
+    ? `class="initials photo" style="background-image:url('${p.photo}')"`
+    : `class="initials" style="background:${POS_COLOR[pos]}"`;
   return `<div class="player-card" data-pos="${pos}" data-id="${p.id}" onclick="selectPlayer('${pos}',${p.id})">
-    <div class="initials" style="background:${POS_COLOR[pos]}">${getInitials(p.name)}</div>
+    <div ${av}>${p.photo ? "" : getInitials(p.name)}</div>
     <div class="info"><div class="name">${firstName ? `<span class="first">${firstName}</span>` : ""}<span>${lastName}</span></div></div>
     <div class="check">✓</div>
   </div>`;
@@ -518,8 +523,11 @@ function filledDot(player, pos, slotIndex) {
   const _nm = _isComp ? lastName.replace(/-/g, "-<br>") : lastName;
   const _nmCls = ""; // règle "nom long = plus petit" désactivée (écarts désormais plus grands)
   const initials = getInitials(player.name);
+  const circleStyle = player.photo
+    ? `background-image:url('${player.photo}');background-size:cover;background-position:center top;border-color:${PITCH_DOT_BORDER}`
+    : `background:${PITCH_DOT_COLOR};border-color:${PITCH_DOT_BORDER};color:${PITCH_DOT_TEXT}`;
   return `<div class="pitch-dot" data-pos="${pos}" onclick="clickSlot(${slotIndex})" title="Retirer ${player.name}">
-    <div class="dot-circle" style="background:${PITCH_DOT_COLOR};border-color:${PITCH_DOT_BORDER};color:${PITCH_DOT_TEXT}">${initials}</div>
+    <div class="dot-circle" style="${circleStyle}">${player.photo ? "" : initials}</div>
     <div class="dot-name${_nmCls}">${_nm}</div>
   </div>`;
 }
