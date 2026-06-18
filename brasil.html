@@ -254,10 +254,10 @@ const PLAYERS = {
     { id: 3, name: "Ederson", photo: "https://cdn.sportmonks.com/images/soccer/players/6/159142.png" }
   ],
   def: [
-    { id: 21, name: "Gabriel Magalhães", photo: "https://cdn.sportmonks.com/images/soccer/players/19/97811.png" },
+    { id: 21, name: "Gabriel Magalhães", short: "Gabriel", photo: "https://cdn.sportmonks.com/images/soccer/players/19/97811.png" },
     { id: 22, name: "Marquinhos", photo: "https://cdn.sportmonks.com/images/soccer/players/16/96208.png" },
-    { id: 23, name: "Alex Sandro", photo: "https://cdn.sportmonks.com/images/soccer/players/29/129725.png" },
-    { id: 24, name: "Danilo Luiz", photo: "https://cdn.sportmonks.com/images/soccer/players/8/159208.png" },
+    { id: 23, name: "Alex Sandro", short: "A.Sandro", photo: "https://cdn.sportmonks.com/images/soccer/players/29/129725.png" },
+    { id: 24, name: "Danilo Luiz", short: "Danilo", photo: "https://cdn.sportmonks.com/images/soccer/players/8/159208.png" },
     { id: 25, name: "Bremer", photo: "https://cdn.sportmonks.com/images/soccer/players/23/1167415.png" },
     { id: 26, name: "Léo Pereira", photo: "https://cdn.sportmonks.com/images/soccer/players/23/218871.png" },
     { id: 27, name: "Douglas Santos", photo: "https://cdn.sportmonks.com/images/soccer/players/6/32614.png" },
@@ -265,14 +265,14 @@ const PLAYERS = {
   ],
   mid: [
     { id: 50, name: "Casemiro", photo: "https://cdn.sportmonks.com/images/soccer/players/20/159700.png" },
-    { id: 51, name: "Bruno Guimarães", photo: "https://cdn.sportmonks.com/images/soccer/players/9/459145.png" },
+    { id: 51, name: "Bruno Guimarães", short: "B.Guimarães", photo: "https://cdn.sportmonks.com/images/soccer/players/9/459145.png" },
     { id: 52, name: "Fabinho", photo: "https://cdn.sportmonks.com/images/soccer/players/3/96099.png" },
-    { id: 53, name: "Danilo Santos", photo: "https://cdn.sportmonks.com/images/soccer/players/5/37533413.png" },
+    { id: 53, name: "Danilo Santos", short: "D.Santos", photo: "https://cdn.sportmonks.com/images/soccer/players/5/37533413.png" },
     { id: 54, name: "Lucas Paquetá", photo: "https://cdn.sportmonks.com/images/soccer/players/20/220052.png" },
     { id: 55, name: "Éderson", photo: "https://cdn.sportmonks.com/images/soccer/players/28/545244.png" }
   ],
   att: [
-    { id: 80, name: "Vinícius Júnior", photo: "https://cdn.sportmonks.com/images/soccer/players/15/600687.png" },
+    { id: 80, name: "Vinícius Júnior", short: "Vinicius Jr", photo: "https://cdn.sportmonks.com/images/soccer/players/15/600687.png" },
     { id: 81, name: "Matheus Cunha", photo: "https://cdn.sportmonks.com/images/soccer/players/19/1846739.png" },
     { id: 82, name: "Neymar", photo: "https://cdn.sportmonks.com/images/soccer/players/16/186320.png" },
     { id: 83, name: "Raphinha", photo: "https://cdn.sportmonks.com/images/soccer/players/2/160258.png" },
@@ -518,7 +518,7 @@ function renderPitch() {
 }
 
 function filledDot(player, pos, slotIndex) {
-  const lastName = getLastName(player.name);
+  const lastName = player.short || getLastName(player.name);
   const _isComp = lastName.includes("-");
   const _nm = _isComp ? lastName.replace(/-/g, "-<br>") : lastName;
   const _nmCls = ""; // règle "nom long = plus petit" désactivée (écarts désormais plus grands)
